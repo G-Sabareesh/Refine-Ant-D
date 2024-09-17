@@ -1,0 +1,30 @@
+.ant-layout .ant-layout-sider-trigger {
+  border-top: 1px solid orange;
+  background: none !important;
+}
+/* .ant-card-body,
+:where(.css-dev-only-do-not-override-of4bow).ant-steps.ant-steps-vertical {
+  height: 100% !important;
+}
+@media screen and (max-width: 890px) {
+  .orderCard1,
+  .orderCard2 {
+    width: 100% !important;
+  }
+} */
+a {
+  text-decoration: none !important;
+  /* color: red !important; */
+}
+
+.ant-ribbon.ant-ribbon-placement-end {
+  height: 30px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 85%;
+}
+
+.leaflet-routing-container {
+  display: none !important;
+}

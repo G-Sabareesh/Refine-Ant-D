@@ -1,0 +1,56 @@
+{
+  "name": "refine-next-antd",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "dev": "cross-env NODE_OPTIONS=--max_old_space_size=4096 refine dev",
+    "build": "refine build",
+    "start": "refine start",
+    "lint": "next lint",
+    "refine": "refine"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^5.0.1",
+    "@ant-design/nextjs-registry": "^1.0.0",
+    "@react-google-maps/api": "^2.19.3",
+    "@refinedev/antd": "^5.37.4",
+    "@refinedev/cli": "^2.16.21",
+    "@refinedev/core": "^4.47.1",
+    "@refinedev/devtools": "^1.1.32",
+    "@refinedev/kbar": "^1.3.6",
+    "@refinedev/nextjs-router": "^6.0.0",
+    "@refinedev/simple-rest": "^5.0.1",
+    "antd": "^5.0.5",
+    "bootstrap": "^5.3.3",
+    "dayjs": "^1.11.13",
+    "i18next": "^23.15.1",
+    "js-cookie": "^3.0.5",
+    "leaflet": "^1.9.4",
+    "leaflet-routing-machine": "^3.2.12",
+    "next": "^14.1.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-i18next": "^15.0.1",
+    "react-icons": "^5.3.0",
+    "react-leaflet": "^4.2.1",
+    "react-map-gl": "^7.1.7"
+  },
+  "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
+    "@types/leaflet": "^1.9.12",
+    "@types/node": "^18.16.2",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8",
+    "eslint-config-next": "^14.1.0",
+    "typescript": "^5.4.2"
+  },
+  "refine": {
+    "projectId": "pMrfpJ-uo1R1T-OkWlNh"
+  }
+}

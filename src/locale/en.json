@@ -1,0 +1,58 @@
+{
+  "pages": {
+    "login": {
+      "title": "Admin Login"
+    }
+  },
+  "table": {
+    "actions": "Action"
+  },
+  "sider": {
+    "title": "FineFood"
+  },
+  "orders": {
+    "order": "order id",
+    "fields": {
+      "status": "status",
+      "amount": "amount",
+      "store": "Store",
+      "courier": "Courier",
+      "phone": "Phone",
+      "customer": "Customer",
+      "createdAt": "Created At",
+      "deliveryTime": "Delivery Time"
+    }
+  },
+  "products": {
+    "fields": {
+      "id": "ID",
+      "images": {
+        "label": "Images"
+      },
+      "name": "Name",
+      "description": "Description",
+      "price": "Price",
+      "category": "Category",
+      "isActive": {
+        "label": "Status",
+        "true": "Available",
+        "false": "Unavailable"
+      }
+    },
+    "filter": {
+      "id": {
+        "placeholder": "Enter Id"
+      },
+      "name": {
+        "placeholder": "Enter Name"
+      },
+      "description": {
+        "placeholder": "Enter Description"
+      },
+      "category": {
+        "placeholder": "Select Category"
+      },
+      "isActive": { "placeholder": "Select status" }
+    }
+  }
+}
