@@ -3,7 +3,7 @@
 import { useList } from "@refinedev/core";
 import React from "react";
 
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -31,7 +31,9 @@ const DeliveryMap = () => {
   // console.log("deliveryMap", data?.data[0]);
 
   const CourierPosition = Array.isArray(dataResult)
-    ? dataResult.map((item) => item?.courier?.store?.address?.coordinate || [0, 0])
+    ? dataResult.map(
+        (item) => item?.courier?.store?.address?.coordinate || [0, 0]
+      )
     : [];
   const CustomerPosition = Array.isArray(dataResult)
     ? dataResult.map((item) => item?.adress?.coordinate || [0, 0])
@@ -63,7 +65,7 @@ const DeliveryMap = () => {
   const CenterPosition: any = ["40.73061", "-73.935242"];
   return (
     <>
-      {CourierPosition[0] !== undefined && (
+      {/* {CourierPosition[0] !== undefined && (
         <MapContainer
           bounds={[[CenterPosition[0], CenterPosition[1]]]}
           zoom={10}
@@ -98,7 +100,8 @@ const DeliveryMap = () => {
             </Marker>
           ))}
         </MapContainer>
-      )}
+      )} */}
+      hjghf
     </>
   );
 };
