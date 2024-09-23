@@ -66,7 +66,7 @@ const MapForComponent = ({
       {CourierPosition[0] !== undefined && (
         <MapContainer
           bounds={[[CenterPosition[0], CenterPosition[1]]]}
-          zoom={10}
+          // zoom={10}
           scrollWheelZoom={false}
           style={{ height: "500px", width: "100%" }}
         >
