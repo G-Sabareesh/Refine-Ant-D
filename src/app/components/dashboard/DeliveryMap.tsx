@@ -2,8 +2,7 @@
 
 import { useList } from "@refinedev/core";
 import React from "react";
-import MapForComponent from "./MapForDashboard";
-
+import MapForComponent from "../MapForDashboard";
 const DeliveryMap = () => {
   const { data } = useList({
     resource: "orders",
