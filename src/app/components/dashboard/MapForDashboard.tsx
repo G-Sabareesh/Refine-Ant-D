@@ -10,9 +10,11 @@ import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 
 import "leaflet-routing-machine";
 
-const MapDComponent = ({ data }: { data: IOrder | undefined | BaseRecord }) => {
-  //   console.log("MapCompo", data);
-  //   console.log(data);
+const MapForComponent = ({
+  data,
+}: {
+  data: IOrder | undefined | BaseRecord;
+}) => {
   const CourierPosition = Array.isArray(data)
     ? data.map((item) => item?.courier?.store?.address?.coordinate || [0, 0])
     : [];
@@ -52,7 +54,7 @@ const MapDComponent = ({ data }: { data: IOrder | undefined | BaseRecord }) => {
           style={{ height: "500px", width: "100%" }}
         >
           <TileLayer
-            maxZoom={10}
+            // maxZoom={10}
             // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
@@ -84,4 +86,4 @@ const MapDComponent = ({ data }: { data: IOrder | undefined | BaseRecord }) => {
   );
 };
 
-export default MapDComponent;
+export default MapForComponent;

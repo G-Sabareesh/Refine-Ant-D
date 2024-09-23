@@ -2,7 +2,7 @@
 
 import { useList } from "@refinedev/core";
 import React from "react";
-import MapDComponent from "./MapForDashboard";
+import MapForComponent from "./MapForDashboard";
 
 const DeliveryMap = () => {
   const { data } = useList({
@@ -19,7 +19,7 @@ const DeliveryMap = () => {
     },
   });
   // console.log("deliveryMap", data?.data[0]);
-  return data ? <MapDComponent data={data?.data} /> : "Loading...";
+  return data ? <MapForComponent data={data?.data} /> : "Loading...";
 };
 
 export default DeliveryMap;
