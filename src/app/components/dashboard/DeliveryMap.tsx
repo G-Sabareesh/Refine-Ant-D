@@ -1,7 +1,7 @@
 "use client";
 
 import { useList } from "@refinedev/core";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -12,6 +12,12 @@ import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import "leaflet-routing-machine";
 
 const DeliveryMap = () => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const { data } = useList({
     resource: "orders",
     config: {
@@ -65,7 +71,7 @@ const DeliveryMap = () => {
   const CenterPosition: any = ["40.73061", "-73.935242"];
   return (
     <>
-      {/* {CourierPosition[0] !== undefined && (
+      {CourierPosition[0] !== undefined && (
         <MapContainer
           bounds={[[CenterPosition[0], CenterPosition[1]]]}
           zoom={10}
@@ -100,8 +106,7 @@ const DeliveryMap = () => {
             </Marker>
           ))}
         </MapContainer>
-      )} */}
-      hjghf
+      )}
     </>
   );
 };
