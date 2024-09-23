@@ -1,17 +1,14 @@
 "use client";
 import React, { useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import L, { icon, popup } from "leaflet";
 import type { IOrder } from "@app/interfaces";
-import { BaseRecord } from "@refinedev/core";
-
-import "leaflet-routing-machine";
+import { BaseRecord, useNavigation } from "@refinedev/core";
 import "leaflet/dist/leaflet.css";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 
-import * as L from "leaflet";
 import "leaflet-routing-machine";
-import "leaflet/dist/leaflet.css";
-import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 
 interface RoutingMachineProps {
   waypoints: [number, number][];
@@ -20,6 +17,11 @@ interface RoutingMachineProps {
 
 const RoutingMachine: React.FC<RoutingMachineProps> = ({ waypoints, item }) => {
   const map = useMap();
+  // clearMap(map);
+
+  // console.log("POint", waypoints);
+
+  const { list } = useNavigation();
 
   const StoreIcon = new L.Icon({
     iconUrl:
@@ -50,7 +52,6 @@ const RoutingMachine: React.FC<RoutingMachineProps> = ({ waypoints, item }) => {
 
     // Initialize routing control
     const routingControl = L.Routing.control({
-      // npm install @types/leaflet-routing-machine
       waypoints: waypoints.map(([lat, lng]) => L.latLng(lat, lng)),
       lineOptions: {
         styles: [{ color: "blue", weight: 4 }],
@@ -64,18 +65,36 @@ const RoutingMachine: React.FC<RoutingMachineProps> = ({ waypoints, item }) => {
       createMarker: () => null, // Hide default markers
     } as any).addTo(map);
 
-    L.marker(waypoints[0], {
-      icon: BikeIcon,
-      title: item[0],
-    }).addTo(map);
-    L.marker(waypoints[1], { icon: StoreIcon, title: item[1] }).addTo(map);
-    L.marker(waypoints[2], { icon: CustomerIcon, title: item[2] }).addTo(map);
+    // L.marker(waypoints[0], {
+    //   icon: BikeIcon,
+    //   title: item[0],
+    // }).addTo(map);
+    // L.marker(waypoints[1], { icon: StoreIcon, title: item[1] }).addTo(map);
+    // L.marker(waypoints[2], { icon: CustomerIcon, title: item[2] }).addTo(map);
+
+    const icons = [BikeIcon, StoreIcon, CustomerIcon];
+    waypoints?.map((position, index) => {
+      const marker = L.marker(position, {
+        icon: icons[index],
+        title: item[index],
+      }).addTo(map);
+      marker.bindPopup(item[index]);
+    });
   }, [map, waypoints]);
 
   return null;
 };
-
+// function clearMap(map: any) {
+//   // console.log(map);
+//   // Remove all markers and layers from the map
+//   map.eachLayer((layer: any) => {
+//     if (layer instanceof L.Marker) {
+//       map.removeLayer(layer);
+//     }
+//   });
+// }
 const MapComponent = ({ data }: { data: IOrder | undefined | BaseRecord }) => {
+  // console.log("MapCompo", data);
   const CourierPosition = data?.courier?.store?.address?.coordinate;
   const StorePosition = data?.store?.address?.coordinate;
   const CustomerPosition = data?.adress?.coordinate;
@@ -98,7 +117,7 @@ const MapComponent = ({ data }: { data: IOrder | undefined | BaseRecord }) => {
           ]}
           zoom={13}
           scrollWheelZoom={false}
-          className="col-md-12"
+          // className="col-md-12"
           style={{ height: "50vh" }}
         >
           <TileLayer
@@ -127,7 +146,7 @@ const MapComponent = ({ data }: { data: IOrder | undefined | BaseRecord }) => {
             item={[
               data?.courier?.store?.address?.text,
               data?.store?.address?.text,
-              data?.store?.address?.text,
+              data?.adress?.text,
             ]}
             waypoints={[
               [CourierPosition[0], CourierPosition[1]],

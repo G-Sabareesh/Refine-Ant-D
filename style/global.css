@@ -17,7 +17,8 @@ a {
   /* color: red !important; */
 }
 
-.ant-ribbon.ant-ribbon-placement-end {
+
+.Product-Show .ant-ribbon.ant-ribbon-placement-end {
   height: 30px !important;
   display: flex;
   align-items: center;
@@ -27,4 +28,8 @@ a {
 
 .leaflet-routing-container {
   display: none !important;
+}
+
+.ant-segmented-group {
+  padding: 5px !important;
 }

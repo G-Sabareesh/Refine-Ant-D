@@ -12,11 +12,15 @@ import { authProvider } from "@providers/auth-provider";
 import { dataProvider } from "@providers/data-provider";
 import "@refinedev/antd/dist/reset.css";
 import i18nProvider from "@components/i18n/i18nProvider";
+import { RiMotorbikeLine } from "react-icons/ri";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import "../../style/global.css";
 import {
+  DashboardOutlined,
+  ShopFilled,
+  ShopOutlined,
   ShoppingOutlined,
   TagsOutlined,
   UserOutlined,
@@ -56,10 +60,19 @@ export default function RootLayout({
                   i18nProvider={i18nProvider}
                   resources={[
                     {
+                      name: "dashboard",
+                      list: "/dashboard",
+                      meta: {
+                        label: "Dashboard",
+                        icon: <DashboardOutlined />,
+                      },
+                    },
+                    {
                       name: "users",
                       list: "/users",
                       show: "/users/show/:id",
                       meta: {
+                        label: "Customers",
                         icon: <UserOutlined />,
                       },
                     },
@@ -84,6 +97,25 @@ export default function RootLayout({
                       list: "/products",
                       show: "/products/show/:id",
                       edit: "/products/edit/:id",
+                      create: "products/create",
+                    },
+                    {
+                      name: "stores",
+                      list: "/stores",
+                      show: "/stores/show/:id",
+                      meta: {
+                        icon: <ShopOutlined />,
+                      },
+                    },
+                    {
+                      name: "couriers",
+                      list: "/couriers",
+                      show: "/couriers/show/:id",
+                      edit: "/couriers/edit/:id",
+                      create: "/couriers/create",
+                      meta: {
+                        icon: <RiMotorbikeLine />,
+                      },
                     },
                   ]}
                   options={{

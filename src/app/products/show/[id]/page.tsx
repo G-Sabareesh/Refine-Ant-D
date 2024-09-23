@@ -12,6 +12,7 @@ import {
   Button,
   Divider,
   Flex,
+  Grid,
   List,
   theme,
   Typography,
@@ -19,7 +20,10 @@ import {
 import React from "react";
 
 const ShowProduct = () => {
+  const screen = Grid.useBreakpoint();
+  // console.log(screen);
   const { query } = useShow();
+  console.log(query);
   const product: any = query?.data?.data;
   const { token } = theme.useToken();
 
@@ -39,9 +43,10 @@ const ShowProduct = () => {
       <Flex
         align="center"
         justify="space-around"
+        wrap={true}
         className="position-relative w-100 rounded-2"
       >
-        <Flex>
+        <Flex className="Product-Show">
           <Badge.Ribbon
             text={product?.name}
             color="volcano"
@@ -57,14 +62,23 @@ const ShowProduct = () => {
                 margin: "16px auto",
                 borderRadius: "8px",
               }}
-              src={product?.images?.[0].url}
+              src={
+                product?.images?.[0].url
+                // product?.images?.[0]?.file?.response.url
+              }
               alt={product?.images?.[0].name}
             />
           </Badge.Ribbon>
         </Flex>
         <Flex
           vertical={true}
-          className="rounded-2 w-75"
+          className={
+            screen.sm || screen.md
+              ? screen.lg
+                ? "rounded-2 w-75"
+                : "rounded-2 w-100"
+              : ""
+          }
           style={{
             backgroundColor: token.colorBgContainerDisabled,
           }}
@@ -140,8 +154,8 @@ const ShowProduct = () => {
           </Flex>
         </Flex>
       </Flex>
-      <Flex align="center" justify="end" className="me-4 px-2">
-        <Button
+      {/*<Flex align="center" justify="end">
+         <Button
           icon={<EditOutlined />}
           onClick={() => {
             return go({
@@ -158,7 +172,7 @@ const ShowProduct = () => {
         >
           Edit
         </Button>
-      </Flex>
+      </Flex> */}
     </Show>
   );
 };

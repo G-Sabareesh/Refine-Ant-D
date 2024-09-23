@@ -72,6 +72,7 @@ export default function UsersList() {
             onClick: () => show("orders", record?.id),
           };
         }}
+        style={{ cursor: "pointer" }}
       >
         <Table.Column
           key="orderNumber"
