@@ -84,8 +84,8 @@ const Dashboard = () => {
             bordered={false}
           >
             <Flex align="center" justify="center">
-              <DeliveryMap />
-            </Flex>{" "}
+              {/* <DeliveryMap /> */}a
+            </Flex>
           </Card>
         </Col>
         <Col xs={24} sm={24} md={12} lg={10}>

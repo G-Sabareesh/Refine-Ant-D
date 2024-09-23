@@ -66,12 +66,12 @@ const DeliveryMap = () => {
       {CourierPosition[0] !== undefined && (
         <MapContainer
           bounds={[[CenterPosition[0], CenterPosition[1]]]}
-          // zoom={10}
+          zoom={10}
           scrollWheelZoom={false}
           style={{ height: "500px", width: "100%" }}
         >
           <TileLayer
-            // maxZoom={10}
+            maxZoom={10}
             // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
