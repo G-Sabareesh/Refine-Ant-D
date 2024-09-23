@@ -3,12 +3,13 @@
 import { useList } from "@refinedev/core";
 import React, { useEffect, useState } from "react";
 
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
 const DeliveryMap = () => {
   const [isMounted, setIsMounted] = useState(false);
+  const map = useMap();
 
   useEffect(() => {
     setIsMounted(true);
@@ -67,7 +68,7 @@ const DeliveryMap = () => {
   const CenterPosition: any = ["40.73061", "-73.935242"];
   return (
     <>
-      {CourierPosition[0] !== undefined && (
+      {isMounted && CourierPosition[0] !== undefined && (
         <MapContainer
           bounds={[[CenterPosition[0], CenterPosition[1]]]}
           zoom={10}
@@ -76,7 +77,6 @@ const DeliveryMap = () => {
         >
           <TileLayer
             maxZoom={10}
-            // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           {CourierPosition.map((item, index) => (
@@ -85,9 +85,7 @@ const DeliveryMap = () => {
               position={[item[0], item[1]]}
               icon={BikeIcon}
             >
-              {CourierPopup.map((item, index) => (
-                <Popup key={"CourierPopup" + index}>{item}</Popup>
-              ))}
+              <Popup>{CourierPopup[index]}</Popup>
             </Marker>
           ))}
           {CustomerPosition.map((item, index) => (
@@ -96,9 +94,7 @@ const DeliveryMap = () => {
               position={[item[0], item[1]]}
               icon={CustomerIcon}
             >
-              {CustomerPopup.map((item, index) => (
-                <Popup key={"CustomerPopup" + index}>{item}</Popup>
-              ))}
+              <Popup>{CustomerPopup[index]}</Popup>
             </Marker>
           ))}
         </MapContainer>
