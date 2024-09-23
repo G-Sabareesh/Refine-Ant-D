@@ -9,6 +9,7 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 
 import "leaflet-routing-machine";
+import { UserOutlined } from "@ant-design/icons";
 
 const MapForComponent = ({
   data,
@@ -29,17 +30,33 @@ const MapForComponent = ({
     ? data.map((item) => item?.adress?.text)
     : [];
 
-  const BikeIcon = L.icon({
-    iconUrl: "/images/marker-courier.svg", // Path to your SVG file
-    iconSize: [32, 32], // Adjust size as needed
-    iconAnchor: [16, 32], // Point of the icon which will correspond to marker's location
-    popupAnchor: [0, -32], // Point from which the popup should open relative to the iconAnchor
+  // const BikeIcon = L.icon({
+  //   iconUrl: "/images/marker-courier.svg", // Path to your SVG file
+  //   iconSize: [32, 32], // Adjust size as needed
+  //   iconAnchor: [16, 32], // Point of the icon which will correspond to marker's location
+  //   popupAnchor: [0, -32], // Point from which the popup should open relative to the iconAnchor
+  // });
+  // const CustomerIcon = new L.Icon({
+  //   iconUrl: "/images/marker-customer.svg", // Path to your SVG file
+  //   iconSize: [32, 32], // Adjust size as needed
+  //   iconAnchor: [16, 32], // Point of the icon which will correspond to marker's location
+  //   popupAnchor: [0, -32], // Point from which the popup should open relative to the iconAnchor
+  // });
+
+  const BikeIcon = new L.Icon({
+    iconUrl:
+      "https://img.icons8.com/?size=100&id=SxC2hmS49DQd&format=png&color=000000", // Replace with the path to your custom image
+    iconSize: [32, 32], // Size of the icon
+    // iconAnchor: position && [Number(position[0]), Number(position[1])], // Point of the icon which will correspond to marker's location
+    //   popupAnchor: [0, -32], // Point from which the popup should open relative to the iconAnchor
   });
+
   const CustomerIcon = new L.Icon({
-    iconUrl: "/images/marker-customer.svg", // Path to your SVG file
-    iconSize: [32, 32], // Adjust size as needed
-    iconAnchor: [16, 32], // Point of the icon which will correspond to marker's location
-    popupAnchor: [0, -32], // Point from which the popup should open relative to the iconAnchor
+    iconUrl:
+      "https://img.icons8.com/?size=100&id=JV4CtfM2e55t&format=png&color=000000", // Replace with the path to your custom image
+    iconSize: [32, 32], // Size of the icon
+    // iconAnchor: position && [Number(position[0]), Number(position[1])], // Point of the icon which will correspond to marker's location
+    //   popupAnchor: [0, -32], // Point from which the popup should open relative to the iconAnchor
   });
 
   const CenterPosition: any = ["40.73061", "-73.935242"];
