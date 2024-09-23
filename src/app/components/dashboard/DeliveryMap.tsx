@@ -6,10 +6,6 @@ import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import "leaflet/dist/leaflet.css";
-import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
-
-import "leaflet-routing-machine";
 
 const DeliveryMap = () => {
   const [isMounted, setIsMounted] = useState(false);
