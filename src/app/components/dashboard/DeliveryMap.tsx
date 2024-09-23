@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 
 import { useList } from "@refinedev/core";
 import React from "react";
