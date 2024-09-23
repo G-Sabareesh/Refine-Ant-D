@@ -1,96 +1,158 @@
 "use client";
-
-import { useList } from "@refinedev/core";
-import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer, useMap } from "react-leaflet";
+import React, { useEffect } from "react";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import L from "leaflet";
+import L, { icon, popup } from "leaflet";
+import type { IOrder } from "@app/interfaces";
+import { BaseRecord, useNavigation } from "@refinedev/core";
+import "leaflet/dist/leaflet.css";
+import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 
-const DeliveryMap = () => {
-  const [isMounted, setIsMounted] = useState(false);
+import "leaflet-routing-machine";
+
+interface RoutingMachineProps {
+  waypoints: [number, number][];
+  item: string[]; // Array of waypoints
+}
+
+const RoutingMachine: React.FC<RoutingMachineProps> = ({ waypoints, item }) => {
   const map = useMap();
+  // clearMap(map);
+
+  // console.log("POint", waypoints);
+
+  const { list } = useNavigation();
+
+  const StoreIcon = new L.Icon({
+    iconUrl:
+      "https://static.vecteezy.com/system/resources/previews/015/131/905/original/flat-cartoon-style-shop-facade-front-view-modern-flat-storefront-or-supermarket-design-png.png", // Replace with the path to your custom image
+    iconSize: [32, 32], // Size of the icon
+    // iconAnchor: position && [Number(position[0]), Number(position[1])], // Point of the icon which will correspond to marker's location
+    //   popupAnchor: [0, -32], // Point from which the popup should open relative to the iconAnchor
+  });
+
+  const BikeIcon = new L.Icon({
+    iconUrl:
+      "https://img.icons8.com/?size=100&id=SxC2hmS49DQd&format=png&color=000000", // Replace with the path to your custom image
+    iconSize: [32, 32], // Size of the icon
+    // iconAnchor: position && [Number(position[0]), Number(position[1])], // Point of the icon which will correspond to marker's location
+    //   popupAnchor: [0, -32], // Point from which the popup should open relative to the iconAnchor
+  });
+
+  const CustomerIcon = new L.Icon({
+    iconUrl:
+      "https://img.icons8.com/?size=100&id=JV4CtfM2e55t&format=png&color=000000", // Replace with the path to your custom image
+    iconSize: [32, 32], // Size of the icon
+    // iconAnchor: position && [Number(position[0]), Number(position[1])], // Point of the icon which will correspond to marker's location
+    //   popupAnchor: [0, -32], // Point from which the popup should open relative to the iconAnchor
+  });
 
   useEffect(() => {
     if (!map) return;
 
-    // Clear existing markers on re-render
-    const markers: any = [];
-
-    const { data } = useList({
-      resource: "orders",
-      config: {
-        filters: [
-          {
-            field: "status.text",
-            operator: "eq",
-            value: "On The Way",
-          },
-        ],
-        pagination: { mode: "off" },
+    // Initialize routing control
+    const routingControl = L.Routing.control({
+      waypoints: waypoints.map(([lat, lng]) => L.latLng(lat, lng)),
+      lineOptions: {
+        styles: [{ color: "blue", weight: 4 }],
+        extendToWaypoints: false,
+        missingRouteTolerance: 0,
       },
+      routeWhileDragging: false,
+      // draggableWaypoints: false,
+      addWaypoints: false,
+      // Use type assertion to bypass type checking
+      createMarker: () => null, // Hide default markers
+    } as any).addTo(map);
+
+    // L.marker(waypoints[0], {
+    //   icon: BikeIcon,
+    //   title: item[0],
+    // }).addTo(map);
+    // L.marker(waypoints[1], { icon: StoreIcon, title: item[1] }).addTo(map);
+    // L.marker(waypoints[2], { icon: CustomerIcon, title: item[2] }).addTo(map);
+
+    const icons = [BikeIcon, StoreIcon, CustomerIcon];
+    waypoints?.map((position, index) => {
+      const marker = L.marker(position, {
+        icon: icons[index],
+        title: item[index],
+      }).addTo(map);
+      marker.bindPopup(item[index]);
     });
+  }, [map, waypoints]);
 
-    const dataResult = data?.data || [];
-
-    const CourierPosition = dataResult.map(
-      (item) => item?.courier?.store?.address?.coordinate || [0, 0]
-    );
-    const CustomerPosition = dataResult.map(
-      (item) => item?.adress?.coordinate || [0, 0]
-    );
-    const CourierPopup = dataResult.map(
-      (item) => item?.courier?.store?.address?.text
-    );
-    const CustomerPopup = dataResult.map((item) => item?.adress?.text);
-
-    const BikeIcon = new L.Icon({
-      iconUrl:
-        "https://img.icons8.com/?size=100&id=SxC2hmS49DQd&format=png&color=000000",
-      iconSize: [32, 32],
-    });
-
-    const CustomerIcon = new L.Icon({
-      iconUrl:
-        "https://img.icons8.com/?size=100&id=JV4CtfM2e55t&format=png&color=000000",
-      iconSize: [32, 32],
-    });
-
-    // Add Courier Markers
-    CourierPosition.forEach((position, index) => {
-      const marker = L.marker(position, { icon: BikeIcon }).addTo(map);
-      marker.bindPopup(CourierPopup[index]);
-      markers.push(marker);
-    });
-
-    // Add Customer Markers
-    CustomerPosition.forEach((position, index) => {
-      const marker = L.marker(position, { icon: CustomerIcon }).addTo(map);
-      marker.bindPopup(CustomerPopup[index]);
-      markers.push(marker);
-    });
-
-    // Cleanup markers on unmount
-    return () => {
-      markers.forEach((marker: any) => {
-        map.removeLayer(marker);
-      });
-    };
-  }, [map]);
-
-  const CenterPosition = [40.73061, -73.935242];
+  return null;
+};
+// function clearMap(map: any) {
+//   // console.log(map);
+//   // Remove all markers and layers from the map
+//   map.eachLayer((layer: any) => {
+//     if (layer instanceof L.Marker) {
+//       map.removeLayer(layer);
+//     }
+//   });
+// }
+const MapComponent = ({ data }: { data: IOrder | undefined | BaseRecord }) => {
+  // console.log("MapCompo", data);
+  const CourierPosition = data?.courier?.store?.address?.coordinate;
+  const StorePosition = data?.store?.address?.coordinate;
+  const CustomerPosition = data?.adress?.coordinate;
+  //   const customIcon = new L.Icon({
+  //     iconUrl:
+  //       "https://png.pngtree.com/png-clipart/20230123/original/pngtree-flat-red-location-sign-png-image_8927579.png", // Replace with the path to your custom image
+  //     iconSize: [32, 32], // Size of the icon
+  //     iconAnchor: position, // Point of the icon which will correspond to marker's location
+  //     //   popupAnchor: [0, -32], // Point from which the popup should open relative to the iconAnchor
+  //   });
 
   return (
     <>
-      {isMounted && (
+      {CourierPosition !== undefined && (
         <MapContainer
-          center={[CenterPosition[0], CenterPosition[1]]}
-          zoom={10}
+          bounds={[
+            [CourierPosition[0], CourierPosition[1]],
+            [StorePosition[0], StorePosition[1]],
+            [CustomerPosition[0], CustomerPosition[1]],
+          ]}
+          zoom={13}
           scrollWheelZoom={false}
-          style={{ height: "500px", width: "100%" }}
+          // className="col-md-12"
+          style={{ height: "50vh" }}
         >
           <TileLayer
-            maxZoom={10}
+            // attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          {/* <Marker
+            position={[CourierPosition[0], CourierPosition[1]]}
+            icon={BikeIcon}
+          >
+            <Popup>{data?.courier?.store?.address?.text}</Popup>
+          </Marker>
+          <Marker
+            position={[StorePosition[0], StorePosition[1]]}
+            icon={StoreIcon}
+          >
+            <Popup>{data?.store?.address?.text}</Popup>
+          </Marker>
+          <Marker
+            position={[CustomerPosition[0], CustomerPosition[1]]}
+            icon={CustomerIcon}
+          >
+            <Popup>{data?.store?.address?.text}</Popup>
+          </Marker> */}
+          <RoutingMachine
+            item={[
+              data?.courier?.store?.address?.text,
+              data?.store?.address?.text,
+              data?.adress?.text,
+            ]}
+            waypoints={[
+              [CourierPosition[0], CourierPosition[1]],
+              [StorePosition[0], StorePosition[1]],
+              [CustomerPosition[0], CustomerPosition[1]],
+            ]}
           />
         </MapContainer>
       )}
@@ -98,4 +160,4 @@ const DeliveryMap = () => {
   );
 };
 
-export default DeliveryMap;
+export default MapComponent;
