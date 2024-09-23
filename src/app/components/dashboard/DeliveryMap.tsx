@@ -12,8 +12,9 @@ const DeliveryMap = () => {
   const map = useMap();
 
   useEffect(() => {
+    if (!map) return;
     setIsMounted(true);
-  }, []);
+  }, [map]);
 
   const { data } = useList({
     resource: "orders",
